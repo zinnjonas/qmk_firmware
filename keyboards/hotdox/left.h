@@ -42,6 +42,7 @@
 
 extern bool hotdox_left_led_1;
 extern bool hotdox_left_led_2;
+extern bool hotdox_suspended;
 
 inline void hotdox_left_led_1_on(void) { hotdox_left_led_1 = 0; }
 inline void hotdox_left_led_2_on(void) { hotdox_left_led_2 = 0; }
@@ -53,6 +54,7 @@ typedef int16_t i2c_status_t;
 
 void left_init(void);
 void left_scan(void);
+void left_leds_disable(void);
 
 uint8_t left_read_cols(void);
 uint8_t left_get_col(uint8_t col);

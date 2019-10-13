@@ -59,6 +59,7 @@ inline void ergodox_led_all_on(void) {
     ergodox_right_led_3_on();
     hotdox_left_led_1_on();
     hotdox_left_led_2_on();
+    hotdox_leds_update();
 }
 
 inline void ergodox_led_all_off(void) {
@@ -68,6 +69,7 @@ inline void ergodox_led_all_off(void) {
     ergodox_right_led_3_off();
     hotdox_left_led_1_off();
     hotdox_left_led_2_off();
+    hotdox_leds_update();
 }
 
 inline void ergodox_right_led_1_set(uint8_t n)          {}

@@ -5,6 +5,7 @@
 bool i2c_initialized = false;
 bool hotdox_left_led_1 = false;
 bool hotdox_left_led_2 = false;
+bool hotdox_suspended = false;
 
 void left_config(void);
 uint8_t left_write(uint8_t reg, uint8_t data);
@@ -24,6 +25,8 @@ uint8_t init_mcp23017(void)
 }
 void left_init(void)
 {
+  if(!hotdox_suspended)
+  {
     init_mcp23017();
     left_scan();
 #if 0
@@ -33,6 +36,7 @@ void left_init(void)
         wait_us(1000000);
     }
 #endif
+  }
 }
 
 void left_scan(void)
@@ -89,10 +93,16 @@ void left_config(void)
   left_write(MCP23017_B0_IODIRA, 0x7F);
   left_write(MCP23017_B0_IPOLA,  0x7F);
   left_write(MCP23017_B0_GPPUA,  0x7F);
-
+  
   left_write(MCP23017_B0_IODIRB, 0x3F);
   left_write(MCP23017_B0_GPPUB,  0x7F);
   left_write(MCP23017_B0_GPIOB,  0x00);
+}
+
+void left_leds_disable(void)
+{
+  left_write(MCP23017_B0_IODIRB, 0xFF);
+  left_write(MCP23017_B0_GPIOB,  0xC0);
 }
 
 uint8_t left_write(uint8_t reg, uint8_t data)
@@ -135,5 +145,6 @@ out:
 
 void hotdox_leds_update(void)
 {
+  if(!hotdox_suspended)
     left_write(MCP23017_B0_GPIOB, hotdox_left_led_1 << 7 | hotdox_left_led_2 << 6);
 }

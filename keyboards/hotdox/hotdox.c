@@ -21,7 +21,24 @@ void ergodox_blink_all_leds(void);
 void matrix_init_kb(void) {
   ergodox_blink_all_leds();
   matrix_init_user();
+}
+
+void keyboard_post_init_user(void)
+{
   ergodox_right_led_1_on();
+}
+
+void suspend_power_down_user(void) 
+{
+  ergodox_led_all_off();
+  left_leds_disable();
+  hotdox_suspended = true;
+}
+
+void suspend_wakeup_init_user(void)
+{
+  hotdox_suspended = false;
+  layer_state_set_user(layer_state);
 }
 
 void ergodox_blink_all_leds(void)
