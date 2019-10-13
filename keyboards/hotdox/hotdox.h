@@ -3,6 +3,7 @@
 #include "quantum.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include "left.h"
 
 #define CPU_PRESCALE(n) (CLKPR = 0x80, CLKPR = (n))
 #define CPU_16MHz       0x00
@@ -56,6 +57,8 @@ inline void ergodox_led_all_on(void) {
     ergodox_right_led_1_on();
     ergodox_right_led_2_on();
     ergodox_right_led_3_on();
+    hotdox_left_led_1_on();
+    hotdox_left_led_2_on();
 }
 
 inline void ergodox_led_all_off(void) {
@@ -63,6 +66,8 @@ inline void ergodox_led_all_off(void) {
     ergodox_right_led_1_off();
     ergodox_right_led_2_off();
     ergodox_right_led_3_off();
+    hotdox_left_led_1_off();
+    hotdox_left_led_2_off();
 }
 
 inline void ergodox_right_led_1_set(uint8_t n)          {}

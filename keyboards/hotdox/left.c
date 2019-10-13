@@ -3,6 +3,8 @@
 #include "wait.h"
 
 bool i2c_initialized = false;
+bool hotdox_left_led_1 = false;
+bool hotdox_left_led_2 = false;
 
 void left_config(void);
 uint8_t left_write(uint8_t reg, uint8_t data);
@@ -45,6 +47,7 @@ void left_scan(void)
         {
             i2c_initialized = true;
             left_config();
+            hotdox_leds_update();
             clear_keyboard();
             print("mcp23017 attached!!!\n");
         }
@@ -87,8 +90,9 @@ void left_config(void)
   left_write(MCP23017_B0_IPOLA,  0x7F);
   left_write(MCP23017_B0_GPPUA,  0x7F);
 
-  left_write(MCP23017_B0_IODIRB, 0xFF);
-  left_write(MCP23017_B0_GPIOB,  0xC0);
+  left_write(MCP23017_B0_IODIRB, 0x3F);
+  left_write(MCP23017_B0_GPPUB,  0x7F);
+  left_write(MCP23017_B0_GPIOB,  0x00);
 }
 
 uint8_t left_write(uint8_t reg, uint8_t data)
@@ -127,4 +131,9 @@ uint8_t left_read(uint8_t reg, uint8_t *data)
 out:
   i2c_stop();
   return ret;
+}
+
+void hotdox_leds_update(void)
+{
+    left_write(MCP23017_B0_GPIOB, hotdox_left_led_1 << 7 | hotdox_left_led_2 << 6);
 }

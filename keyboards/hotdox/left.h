@@ -40,6 +40,15 @@
 
 #define HOTDOX_I2C_TIMEOUT     100
 
+extern bool hotdox_left_led_1;
+extern bool hotdox_left_led_2;
+
+inline void hotdox_left_led_1_on(void) { hotdox_left_led_1 = 0; }
+inline void hotdox_left_led_2_on(void) { hotdox_left_led_2 = 0; }
+
+inline void hotdox_left_led_1_off(void) { hotdox_left_led_1 = 1; }
+inline void hotdox_left_led_2_off(void) { hotdox_left_led_2 = 1; }
+
 typedef int16_t i2c_status_t;
 
 void left_init(void);
@@ -55,3 +64,4 @@ void left_select_row(uint8_t row);
 
 uint8_t init_mcp23017(void);
 
+void hotdox_leds_update(void);
